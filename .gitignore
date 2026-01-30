@@ -1,0 +1,7 @@
+# LOCATION: ~/.gitignore
+
+# Dependency Management
+node_modules/
+
+# Caching
+.next/
