@@ -1,3 +1,7 @@
+"use client";
+
+import { useForm } from "@tanstack/react-form";
+import * as z from "zod";
 import { Button } from "@/components/shadcn/ui/button";
 import {
   Card,
@@ -9,6 +13,7 @@ import {
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
@@ -16,10 +21,25 @@ import {
 import { Input } from "@/components/shadcn/ui/input";
 import { cn } from "@/library/utilities/tailwind";
 
+const form_schema = z.object({
+  email: z.email("Invalid email address!"),
+  password: z.string().min(8, "Password must be at least 8 characters!"),
+});
+
 export function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    validators: {
+      onSubmit: form_schema,
+    },
+    onSubmit: async () => {},
+  });
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -50,25 +70,65 @@ export function SignUpForm({
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 {"Or sign up with your credentials"}
               </FieldSeparator>
-              <Field>
-                <FieldLabel htmlFor="email">{"Email"}</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="username@email.com"
-                  required
-                />
-              </Field>
-              <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">{"Password"}</FieldLabel>
-                </div>
-                <Input id="password" type="password" required />
-              </Field>
+              <form.Field
+                name="email"
+                // biome-ignore lint/correctness/noChildrenProp: must extract logic inside form.field
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>{"Email"}</FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        aria-invalid={isInvalid}
+                        placeholder="username@email.com"
+                        autoComplete="off"
+                        type="email"
+                        required
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+              <form.Field
+                name="password"
+                // biome-ignore lint/correctness/noChildrenProp: must extract logic inside form.field
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>{"Password"}</FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        aria-invalid={isInvalid}
+                        autoComplete="off"
+                        type="password"
+                        required
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
               <Field>
                 <Button type="submit">{"Sign Up"}</Button>
                 <FieldDescription className="text-center">
-                  {"Have an account? "}
+                  {"Already have an account? "}
                   <a href="/auth/sign-in">{"Sign in"}</a>
                 </FieldDescription>
               </Field>
