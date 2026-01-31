@@ -1,3 +1,7 @@
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>;
+  return (
+    <h1 className="h-screen flex items-center justify-center">
+      {"Sorry, this website is under construction!"}
+    </h1>
+  );
 }
