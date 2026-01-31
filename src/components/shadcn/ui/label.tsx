@@ -6,7 +6,7 @@ import { cn } from "@/library/utilities/tailwind";
 
 function Label({ className, ...props }: React.ComponentProps<"label">) {
   return (
-    // biome-ignore lint/a11y/noLabelWithoutControl: <explanation>
+    // biome-ignore lint/a11y/noLabelWithoutControl: shared label component has no corresponding input.
     <label
       data-slot="label"
       className={cn(
