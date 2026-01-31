@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/shadcn/ui/input";
 import { cn } from "@/library/utilities/tailwind";
 
-export function LoginForm({
+export function SignInForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -24,9 +24,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome</CardTitle>
+          <CardTitle className="text-xl">{"Welcome"}</CardTitle>
           <CardDescription>
-            Please sign in with your OAuth provider
+            {"Please sign in with your OAuth provider"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -44,14 +44,14 @@ export function LoginForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Sign in with Google
+                  {"Sign in with Google"}
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                Or sign in with your credentials
+                {"Or sign in with your credentials"}
               </FieldSeparator>
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email">{"Email"}</FieldLabel>
                 <Input
                   id="email"
                   type="email"
@@ -61,23 +61,22 @@ export function LoginForm({
               </Field>
               <Field>
                 <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldLabel htmlFor="password">{"Password"}</FieldLabel>
                   <a
                     // biome-ignore lint/a11y/useValidAnchor: page not developed yet
                     href="#"
                     className="ml-auto text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
+                    {"Forgot your password?"}
                   </a>
                 </div>
                 <Input id="password" type="password" required />
               </Field>
               <Field>
-                <Button type="submit">Sign In</Button>
+                <Button type="submit">{"Sign In"}</Button>
                 <FieldDescription className="text-center">
-                  {"Don't have an account?"}
-                  {/** biome-ignore lint/a11y/useValidAnchor: page not developed yet */}
-                  <a href="#">Sign up</a>
+                  {"Don't have an account? "}
+                  <a href="/auth/sign-up">{"Sign up"}</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
@@ -88,7 +87,7 @@ export function LoginForm({
         {"By clicking continue, you agree to our "}
         {/** biome-ignore lint/a11y/useValidAnchor: page not developed yet */}
         <a href="#">{"Terms of Service"}</a>
-        {"and"}
+        {" and "}
         {/** biome-ignore lint/a11y/useValidAnchor: page not developed yet */}
         <a href="#">{"Privacy Policy"}</a>.
       </FieldDescription>

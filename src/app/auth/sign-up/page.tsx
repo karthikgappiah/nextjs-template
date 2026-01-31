@@ -1,7 +1,7 @@
 import { LinktreeLogoIcon } from "@phosphor-icons/react/dist/ssr";
-import { SignInForm } from "@/components/shadcn/blocks/signin-form";
+import { SignUpForm } from "@/components/shadcn/blocks/signup-form";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -11,7 +11,7 @@ export default function SignInPage() {
           </div>
           AppiahCo
         </a>
-        <SignInForm />
+        <SignUpForm />
       </div>
     </div>
   );
