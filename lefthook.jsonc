@@ -1,10 +1,15 @@
 {
+	"output": ["failure"],
 	"pre-commit": {
 		"commands": {
 			"biome": {
 				"glob": "*.{js,ts,jsx,tsx,json,jsonc,css}",
 				"run": "pnpm biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}",
 				"stage_fixed": true
+			},
+			"allow-builds": {
+				"glob": "pnpm-workspace.yaml",
+				"run": "! grep -n 'set this to true or false' pnpm-workspace.yaml"
 			}
 		}
 	}
