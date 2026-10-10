@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"check": "biome check --write",
+		"prepare": "lefthook install",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
@@ -20,6 +21,7 @@
 	"packageManager": "pnpm@12.10.1",
 	"type": "module",
 	"devDependencies": {
-		"@biomejs/biome": "2.5.15"
+		"@biomejs/biome": "2.5.15",
+		"lefthook": "^2.2.1"
 	}
 }
