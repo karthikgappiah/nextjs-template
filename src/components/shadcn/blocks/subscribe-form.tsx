@@ -59,7 +59,7 @@ export function SubscribeForm() {
 					/>
 				</div>
 				<FieldError>{state.error}</FieldError>
-				<FieldDescription>No spam. Unsubscribe any time.</FieldDescription>
+				<FieldDescription>No spam.</FieldDescription>
 			</Field>
 		</form>
 	);
