@@ -44,3 +44,6 @@ Authentication uses [Neon Auth](https://neon.com/docs/auth/overview) (Managed Be
 - Set `NEON_AUTH_COOKIE_SECRET` (32+ characters, `openssl rand -base64 32`).
 - `src/library/auth/server.ts` is the server instance, `src/library/auth/client.ts` the browser client, and `src/app/api/auth/[...path]/route.ts` proxies auth requests.
 - Before deploying, register your origin: `neon neon-auth domain add https://your-app.example.com`. Localhost is pre-approved.
+- Routes: `/` is public, `/sign-in` and `/sign-up` are the auth pages, and `/home` is protected. `src/proxy.ts` redirects unauthenticated requests for `/home/:path*` to `/sign-in`; add new protected paths to its `matcher`. Pages still check `auth.getSession()` themselves, so don't rely on the proxy alone.
+- The forms (`sign-in-form.tsx`, `sign-up-form.tsx`, `sign-out-button.tsx`) live in `src/components/shadcn/blocks/`, built from shadcn/ui `Card`, `Field`, `Input`, and `Button`. They submit through Server Actions in `src/library/auth/actions.ts` using `useActionState`, so they work without client-side JavaScript.
+- `src/library/auth/session.ts` exports `getUser()`, a `React.cache`-deduplicated session lookup for Server Components and actions.

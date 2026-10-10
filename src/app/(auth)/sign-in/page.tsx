@@ -1,0 +1,21 @@
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { SignInForm } from "@/components/shadcn/blocks/sign-in-form";
+import { getUser } from "@/library/auth/session";
+
+export const metadata: Metadata = { title: "Sign in" };
+
+// Reads the session cookie, so this route must render per request.
+export const dynamic = "force-dynamic";
+
+export default async function Page(): Promise<React.JSX.Element> {
+	if (await getUser()) {
+		redirect("/home");
+	}
+
+	return (
+		<main className="flex grow items-center justify-center p-4">
+			<SignInForm />
+		</main>
+	);
+}
