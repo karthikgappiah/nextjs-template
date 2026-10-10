@@ -1,4 +1,5 @@
 import { ModeToggle } from "@/components/shadcn/blocks/mode-toggle";
+import { SubscribeForm } from "@/components/shadcn/blocks/subscribe-form";
 import { LinkButton } from "@/components/shadcn/ui/button";
 
 export default function Page(): React.JSX.Element {
@@ -12,6 +13,7 @@ export default function Page(): React.JSX.Element {
 				<LinkButton href="/sign-up">Sign up</LinkButton>
 				<ModeToggle />
 			</div>
+			<SubscribeForm />
 		</main>
 	);
 }

@@ -47,3 +47,13 @@ Authentication uses [Neon Auth](https://neon.com/docs/auth/overview) (Managed Be
 - Routes: `/` is public, `/sign-in` and `/sign-up` are the auth pages, and `/home` is protected. `src/proxy.ts` redirects unauthenticated requests for `/home/:path*` to `/sign-in`; add new protected paths to its `matcher`. Pages still check `auth.getSession()` themselves, so don't rely on the proxy alone.
 - The forms (`sign-in-form.tsx`, `sign-up-form.tsx`, `sign-out-button.tsx`) live in `src/components/shadcn/blocks/`, built from shadcn/ui `Card`, `Field`, `Input`, and `Button`. They submit through Server Actions in `src/library/auth/actions.ts` using `useActionState`, so they work without client-side JavaScript.
 - `src/library/auth/session.ts` exports `getUser()`, a `React.cache`-deduplicated session lookup for Server Components and actions.
+
+## Mailing list
+
+Visitors can subscribe from the public landing page without an account. Emails are stored in the `subscribers` table.
+
+- The schema is declared with [Drizzle](https://orm.drizzle.team) in `src/library/db/schema.ts`; `src/library/db/index.ts` exports the typed `db` client (pooled `DATABASE_URL`).
+- Migrations are generated SQL committed in `drizzle/`. After changing the schema, run `pnpm db:generate`, then `pnpm db:migrate` (uses `DATABASE_URL_UNPOOLED`). `drizzle.config.ts` limits Drizzle to the `public` schema, so it never touches `neon_auth`.
+- `src/library/mailing-list/actions.ts` exports the `subscribe` Server Action: it trims and lowercases the email, ignores duplicates, and returns the same success state either way so it doesn't reveal who is subscribed. A hidden honeypot field filters simple bots; add rate limiting before relying on it in production.
+- The form is `src/components/shadcn/blocks/subscribe-form.tsx`.
+- Not included: confirmation (double opt-in) emails and unsubscribe links. Add them with an email provider before sending campaigns.
