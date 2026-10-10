@@ -33,8 +33,16 @@ Someone with an account, signed in through Neon Auth.
 _Avoid_: account, customer, member
 
 **Subscriber**:
-An email address on the mailing list, with no account attached. Subscribing is anonymous: the response never reveals whether an address was already on the list.
+An email address that asked to join the mailing list, with no account attached. Subscribing is anonymous: the response never reveals whether an address was already on the list.
 _Avoid_: member, contact, lead
+
+**Confirmed Subscriber**:
+A Subscriber who followed the link in their confirmation email. Only Confirmed Subscribers are on the mailing list.
+_Avoid_: verified subscriber, active subscriber, opted-in
+
+**Unsubscribed**:
+A Subscriber who has left the mailing list. Subscribing and confirming again makes them a Confirmed Subscriber once more.
+_Avoid_: opted out, removed, deleted
 
 A User is never automatically a Subscriber, and a Subscriber is never automatically a User.
 

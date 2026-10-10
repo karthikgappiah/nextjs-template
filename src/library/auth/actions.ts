@@ -2,11 +2,14 @@
 
 import { redirect } from "next/navigation";
 import { auth } from "@/library/auth/server";
+import { allow, clientIp } from "@/library/rate-limit";
 
 export type AuthFormState = {
 	error?: string;
 	email?: string;
 };
+
+const TOO_MANY = "Too many attempts. Please try again later.";
 
 function field(formData: FormData, name: string): string {
 	const value = formData.get(name);
@@ -22,6 +25,9 @@ export async function signIn(
 
 	if (!email || !password) {
 		return { error: "Enter your email and password.", email };
+	}
+	if (!(await allow("sign-in", await clientIp()))) {
+		return { error: TOO_MANY, email };
 	}
 
 	try {
@@ -49,6 +55,9 @@ export async function signUp(
 	}
 	if (password.length < 8) {
 		return { error: "Password must be at least 8 characters.", email };
+	}
+	if (!(await allow("sign-up", await clientIp()))) {
+		return { error: TOO_MANY, email };
 	}
 
 	try {

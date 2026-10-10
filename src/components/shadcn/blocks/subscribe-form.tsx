@@ -22,7 +22,7 @@ export function SubscribeForm() {
 	if (state.subscribed) {
 		return (
 			<p role="status" className="text-center text-sm">
-				Thanks for subscribing!
+				Check your inbox to confirm your subscription.
 			</p>
 		);
 	}
