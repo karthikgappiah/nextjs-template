@@ -4,8 +4,11 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"build": "next build",
 		"check": "biome check --write",
+		"dev": "next dev",
 		"prepare": "lefthook install",
+		"start": "next start",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
@@ -23,5 +26,10 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.5.15",
 		"lefthook": "^2.2.1"
+	},
+	"dependencies": {
+		"next": "^16.4.0",
+		"react": "^19.3.0",
+		"react-dom": "^19.3.0"
 	}
 }
