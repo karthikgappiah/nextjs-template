@@ -19,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
-			<body>{children}</body>
+			<body className="flex min-h-dvh flex-col">{children}</body>
 		</html>
 	);
 }
