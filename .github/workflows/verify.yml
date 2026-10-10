@@ -1,0 +1,46 @@
+name: Verify
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Test and build
+    runs-on: ubuntu-latest
+    env:
+      # Placeholders so modules that read these at import time can build.
+      DATABASE_URL: postgresql://user:password@localhost/db
+      DATABASE_URL_UNPOOLED: postgresql://user:password@localhost/db
+      NEON_AUTH_BASE_URL: https://example.com
+      NEON_AUTH_COOKIE_SECRET: ci-placeholder-secret-at-least-32-chars
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 26
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm exec tsc --noEmit
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
