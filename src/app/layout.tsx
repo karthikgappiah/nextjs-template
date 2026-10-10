@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
+import { Providers } from "@/components/providers/providers";
 
 const geist = Geist({
 	subsets: ["latin"],
@@ -21,8 +22,14 @@ export default function RootLayout({
 	children,
 }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
-			<body className="flex min-h-dvh flex-col">{children}</body>
+		<html
+			lang="en"
+			className={`${geist.variable} ${geistMono.variable}`}
+			suppressHydrationWarning
+		>
+			<body className="flex min-h-dvh flex-col">
+				<Providers>{children}</Providers>
+			</body>
 		</html>
 	);
 }
