@@ -22,7 +22,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
-			<body>{children}</body>
+			<body className="flex min-h-dvh flex-col">{children}</body>
 		</html>
 	);
 }
