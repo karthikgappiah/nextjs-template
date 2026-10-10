@@ -1,18 +1,18 @@
 # syntax=docker/dockerfile:1
 
-FROM node:22-alpine AS base
+FROM node:26-alpine AS base
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN corepack enable
 
 FROM base AS deps
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+# Install outside /app so npm does not enforce package.json's pnpm-only devEngines.
+RUN cd / && npm install -g pnpm@$(node -p "require('/app/package.json').packageManager.split('@')[1]")
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile --ignore-scripts
 
-FROM base AS builder
+FROM deps AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN pnpm build
 
