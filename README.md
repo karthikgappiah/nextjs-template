@@ -35,3 +35,12 @@ Open the printed URL and accept the transfer. Claiming rotates `DATABASE_URL`, s
 | ----------------------- | -------------------------------- |
 | `DATABASE_URL`          | Pooled; app runtime              |
 | `DATABASE_URL_UNPOOLED` | Direct; migrations and admin SQL |
+
+## Auth
+
+Authentication uses [Neon Auth](https://neon.com/docs/auth/overview) (Managed Better Auth). Users and sessions live in the `neon_auth` schema of the same database.
+
+- `neon.ts` declares `auth: true`. Run `neon deploy` to enable it on the branch and write `NEON_AUTH_BASE_URL` to `.env.local`.
+- Set `NEON_AUTH_COOKIE_SECRET` (32+ characters, `openssl rand -base64 32`).
+- `src/library/auth/server.ts` is the server instance, `src/library/auth/client.ts` the browser client, and `src/app/api/auth/[...path]/route.ts` proxies auth requests.
+- Before deploying, register your origin: `neon neon-auth domain add https://your-app.example.com`. Localhost is pre-approved.
