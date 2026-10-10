@@ -5,7 +5,7 @@
 	"tsx": false,
 	"tailwind": {
 		"config": "",
-		"css": "app/globals.css",
+		"css": "src/styles/globals.css",
 		"baseColor": "neutral",
 		"cssVariables": true,
 		"prefix": ""
@@ -14,10 +14,10 @@
 	"rtl": false,
 	"aliases": {
 		"components": "@/components",
-		"utils": "@/lib/utils",
-		"ui": "@/components/ui",
-		"lib": "@/lib",
-		"hooks": "@/hooks"
+		"utils": "@/styles/utilities",
+		"ui": "@/components/shadcn/ui",
+		"lib": "@/library",
+		"hooks": "@/library/hooks"
 	},
 	"menuColor": "default-translucent",
 	"menuAccent": "subtle",
