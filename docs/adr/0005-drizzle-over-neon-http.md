@@ -5,3 +5,4 @@ The app talks to Postgres through Drizzle on `drizzle-orm/neon-http` using the p
 ## Consequences
 
 - The HTTP driver cannot run interactive transactions. Single statements are fine; a multi-step write that must be atomic needs the WebSocket `Pool` driver from `@neondatabase/serverless`.
+- On Vercel, the `vercel-build` script runs `drizzle-kit migrate` before `next build`, so every deploy applies committed migrations to the database its environment points at. A failed migration fails the deploy.

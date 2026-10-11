@@ -14,9 +14,10 @@ const LIMITS = {
 
 export type LimitName = keyof typeof LIMITS;
 
-const configured = Boolean(
-	process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
-);
+// Names set by the Upstash for Redis integration on the Vercel Marketplace.
+const url = process.env.KV_REST_API_URL;
+const token = process.env.KV_REST_API_TOKEN;
+const configured = Boolean(url && token);
 const limiters = new Map<LimitName, Ratelimit>();
 
 function limiter(name: LimitName): Ratelimit {
@@ -24,7 +25,7 @@ function limiter(name: LimitName): Ratelimit {
 	if (!instance) {
 		const { requests, window } = LIMITS[name];
 		instance = new Ratelimit({
-			redis: Redis.fromEnv(),
+			redis: new Redis({ url, token }),
 			limiter: Ratelimit.slidingWindow(requests, window),
 			prefix: `ratelimit:${name}`,
 		});
@@ -38,7 +39,7 @@ export async function allow(name: LimitName, key: string): Promise<boolean> {
 	if (!configured) {
 		// Optional in development and CI, required in production.
 		if (process.env.NODE_ENV === "production") {
-			throw new Error("UPSTASH_REDIS_REST_URL and _TOKEN must be set.");
+			throw new Error("KV_REST_API_URL and KV_REST_API_TOKEN must be set.");
 		}
 		return true;
 	}

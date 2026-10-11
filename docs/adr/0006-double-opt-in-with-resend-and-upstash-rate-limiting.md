@@ -9,6 +9,7 @@ Upstash Redis (`@upstash/ratelimit`, sliding window) limits the subscribe, sign-
 ## Consequences
 
 - Rotating `MAILING_LIST_SECRET` invalidates every confirmation and unsubscribe link already sent.
+- Upstash is read from `KV_REST_API_URL` / `KV_REST_API_TOKEN`, the names the Vercel Marketplace integration sets, so its rotations need no manual copying.
 - Resend, Upstash, `MAILING_LIST_SECRET`, `MAILING_LIST_FROM`, and `APP_URL` are optional in development and CI (emails are logged, limits skipped) and fail loudly in production when missing.
 - Neon Auth's own emails (verification, password reset) do not go through the app. Neon requires custom SMTP for production, so point it at Resend's SMTP (`smtp.resend.com`) in the console under **Settings → Better Auth**, or with `neon neon-auth config email-provider update`. This is manual setup, not code.
 - The client IP comes from `x-forwarded-for`, which is only trustworthy behind a host proxy that sets it.

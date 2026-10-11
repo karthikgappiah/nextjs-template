@@ -12,7 +12,8 @@
 		"prepare": "lefthook install",
 		"start": "next start",
 		"test": "vitest run",
-		"test:watch": "vitest"
+		"test:watch": "vitest",
+		"vercel-build": "drizzle-kit migrate && next build"
 	},
 	"keywords": [],
 	"author": "",
